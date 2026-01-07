@@ -334,6 +334,26 @@ require('lazy').setup({
     end,
   },
   {
+    'kdheepak/lazygit.nvim',
+    lazy = true,
+    cmd = {
+      'LazyGit',
+      'LazyGitConfig',
+      'LazyGitCurrentFile',
+      'LazyGitFilter',
+      'LazyGitFilterCurrentFile',
+    },
+    -- optional for floating window border decoration
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+    },
+    -- setting the keybinding for LazyGit with 'keys' is recommended in
+    -- order to load the plugin when the command is run for the first time
+    keys = {
+      { '<leader>gs', '<cmd>LazyGit<cr>', desc = 'LazyGit' },
+    },
+  },
+  {
     'chentoast/marks.nvim',
     config = function()
       require('marks').setup {
@@ -976,7 +996,22 @@ require('lazy').setup({
   },
 
   -- Highlight todo, notes, etc in comments
-  { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
+  {
+    'folke/todo-comments.nvim',
+    event = 'VimEnter',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    cmd = { 'TodoTrouble', 'TodoTelescope' },
+    opts = {},
+      -- stylua: ignore
+      keys = {
+        { "]t", function() require("todo-comments").jump_next() end, desc = "Next Todo Comment" },
+        { "[t", function() require("todo-comments").jump_prev() end, desc = "Previous Todo Comment" },
+        -- { "<leader>xt", "<cmd>Trouble todo toggle<cr>", desc = "Todo (Trouble)" },
+        -- { "<leader>xT", "<cmd>Trouble todo toggle filter = {tag = {TODO,FIX,FIXME}}<cr>", desc = "Todo/Fix/Fixme (Trouble)" },
+        { "<leader>st", "<cmd>TodoTelescope<cr>", desc = "Todo" },
+        -- { "<leader>sT", "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme" },
+      },
+  },
 
   --   { -- Collection of various small independent plugins/modules
   --     'echasnovski/mini.nvim',
